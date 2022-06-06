@@ -27,7 +27,7 @@ app.delete('/sessions/delete', (request, response) => {
     let email = request.body.email;
 	let sid = request.body.sid;
 
-    console.log(`Got request to delete previously created sessions, will remove ${sid} from session table if exists`);
+    console.log(`Got request to delete previously created sessions, will remove ${sid}, ${email} from session table if exists`);
     pool.query('DELETE FROM SESSIONS WHERE sid = $1 OR email = $2', [sid, email])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
