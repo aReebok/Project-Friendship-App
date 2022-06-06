@@ -21,3 +21,8 @@ create table approvedEmails (
     email text primary key,
     role text
 );
+
+create table sessions (
+    sid text primary key, -- secure session key
+    email text            -- authenticated email 
+);

@@ -6,6 +6,59 @@ var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
+//// -- test 
+app.get('/test', (request, response) => {
+    console.log(`TEST REQUEST.... Processing`);
+    // console.log(request.query);  // verbose output
+    // let sessionID = request.query.sessionid;
+    pool.query('SELECT * FROM RELATIONSHIPS')
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+// delete session key
+app.delete('/sessions/delete', (request, response) => {
+    let email = request.body.email;
+	let sid = request.body.sid;
+
+    console.log(`Got request to delete previously created sessions, will remove ${sid} from session table if exists`);
+    pool.query('DELETE FROM SESSIONS WHERE sid = $1 OR email = $2', [sid, email])
+	.then(res => {
+	    console.log('DB response: ' + res.rows[0]);
+	    response.sendStatus(200)
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+
+app.post('/sessions/add', (request, response) => {
+    let sid = request.body.sid;
+    let email = request.body.email;
+
+	console.log(`Got request to add a session, will add ${sid},${email} to database`);
+    pool.query('INSERT INTO sessions (sid, email) VALUES ($1, $2)',
+	       [sid, email])
+	.then(res => {
+	    console.log('DB response: ' + res.rows[0]);
+	    response.sendStatus(200)
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+
+
 // handle requests
 
 // CREATE session - insert a session key and email address into session table
@@ -50,21 +103,7 @@ app.get('/email', (request, response) => {
 })
 
 
-//// -- test 
-app.get('/test', (request, response) => {
-    console.log(`TEST REQUEST.... Processing`);
-    // console.log(request.query);  // verbose output
-    // let sessionID = request.query.sessionid;
-    pool.query('SELECT * FROM RELATIONSHIPS')
-	.then(res => {
-	    console.log('DB response: ' + JSON.stringify(res.rows));
-	    response.send(res.rows);
-	})
-	.catch(err =>
-	       setImmediate(() => {
-		   throw err;
-	       }));
-})
+
 
 // RETRIEVE profile - send profile object associated with current session ID
 

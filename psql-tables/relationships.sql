@@ -9,3 +9,4 @@ create table relationships (
 
 INSERT INTO RELATIONSHIPS (person1, person2) VALUES ('Areeba','Risha');
 INSERT INTO RELATIONSHIPS (person1, person2) VALUES ('Areeba','Huzaifa');
+
