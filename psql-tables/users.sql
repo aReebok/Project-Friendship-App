@@ -1,20 +1,26 @@
--- creates table for users 
+-- creates table for profiles
+-- if login does not exists, email is set to  
 
 create table users (
     email text primary key,
     fname text,
     lname text,
-    role text
+    role text 
 );
+
+-- example insert
+INSERT INTO users (email, fname, lname, role) VALUES ('khan6@stolaf.edu', 'Areeba', 'Khan', 'mentor');
+
 
 -- create function addUser(email, fname, lname, role) returns 
 
 -- table of users that have requested to sign up
-create table signupRequests (
+create table registerRequests (
     email text primary key,
     fname text,
     lname text,
-    role text
+    role text,
+    phone text
 );
 
 create table approvedEmails (
@@ -22,7 +28,13 @@ create table approvedEmails (
     role text
 );
 
+
+
 create table sessions (
     sid text primary key, -- secure session key
     email text            -- authenticated email 
 );
+
+create function email(text) returns text as $$
+    select email from sessions where sid = $1;
+$$ language 'sql';
