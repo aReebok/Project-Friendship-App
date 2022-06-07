@@ -1,0 +1,8 @@
+*
+!oauth-server.sql
+!app.js
+!package.json
+!mcalib.js
+!bin/www
+!README.md
+!.gitignore
