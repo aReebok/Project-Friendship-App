@@ -96,7 +96,7 @@ app.post('/register/request', (request, response) => {
 
 	console.log(`Got request to register, will add ${fname} ${lname} to database table registerRequests`);
     pool.query('INSERT INTO registerRequests (email, fname, lname, role, phone) VALUES ($1, $2, $3, $4, $5)',
-	       [email, fname, lname, phone, role])
+	       [email, fname, lname, role, phone])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
 	    response.sendStatus(200)
