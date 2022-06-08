@@ -72,6 +72,22 @@ app.put('/session/get', (request, response) => {
 	       }));
 })
 
+app.post('/users/add', (request, response) => {
+	let { email, fname, lname, phone, role } = request.body;
+
+	console.log(`Got request to add profile, will add ${fname} ${lname} to database table users`);
+    pool.query('INSERT INTO users (email, fname, lname, role, phone) VALUES ($1, $2, $3, $4, $5)',
+	       [email, fname, lname, role, phone])
+	.then(res => {
+	    console.log('DB response: ' + res.rows[0]);
+	    response.sendStatus(200)
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
 app.put('/users/get', (request, response) => {
     console.log(`Got request to check if email`);
 	let email = request.body.email;
@@ -106,11 +122,38 @@ app.post('/register/request', (request, response) => {
 		   throw err;
 	       }));
 })
+app.delete('/register/request', (request, response) => {
+    let email = request.body.email;
+    console.log(`Got request to delete previously created sessions, will remove ${email} from registerrequests table if exists`);
+    pool.query('DELETE FROM registerrequests WHERE email = $1', [email])
+	.then(res => {
+	    console.log('DB response: ' + res.rows[0]);
+	    response.sendStatus(200)
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+
+app.post('/register/request', (request, response) => {
+	let { email, fname, lname, role, phone } = request.body;
+
+	console.log(`Got request to register, will add ${fname} ${lname} to database table registerRequests`);
+    pool.query('INSERT INTO registerRequests (email, fname, lname, role, phone) VALUES ($1, $2, $3, $4, $5)',
+	       [email, fname, lname, role, phone])
+	.then(res => {
+	    console.log('DB response: ' + res.rows[0]);
+	    response.sendStatus(200)
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
 
 app.get('/register/request', (request, response) => {
-    // console.log(`TEST REQUEST.... Processing`);
-    // console.log(request.query);  // verbose output
-    // let sessionID = request.query.sessionid;
     pool.query('SELECT * FROM registerRequests')
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows));
