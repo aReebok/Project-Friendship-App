@@ -44,3 +44,5 @@ create function approveUserRegistration(text, text, text, text, text) returns vo
     DELETE FROM registerrequests WHERE email = $1;
     INSERT INTO users VALUES ($1, $2, $3, $4, $5);
 $$ language 'sql';
+
+

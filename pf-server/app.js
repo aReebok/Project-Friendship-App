@@ -72,6 +72,15 @@ app.put('/session/get', (request, response) => {
 	       }));
 })
 
+
+app.get('/users', (request, response) => {
+    pool.query('SELECT * FROM users')
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
+	})
+	.catch(err => setImmediate(() => { throw err; })); })
+
 app.post('/users/add', (request, response) => {
 	let { email, fname, lname, phone, role } = request.body;
 
@@ -102,6 +111,21 @@ app.put('/users/get', (request, response) => {
 		   throw err;
 	       }));
 })
+
+app.delete('/users/delete', (request, response) => {
+    let email = request.body.email;
+    console.log(`Got request to delete user, will remove ${email} from users table`);
+    pool.query('DELETE FROM users WHERE email = $1', [email])
+	.then(res => {
+	    console.log('DB response: ' + res.rows[0]);
+	    response.sendStatus(200)
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
 
 /*
 * Registration requests post, get, delete
