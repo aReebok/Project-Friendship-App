@@ -1,15 +1,17 @@
 -- set up relationship table
-
+-- pending, approved, expired/completed/removed
 create table events (
     eid serial primary key,
-    creator text,
-    reciever text,
-    status text default 'pending' -- pending, approved, expired/completed/removed
+    author text,
+    participant text,
+    stat text default 'pending',
     title text,
-    desc text,
-    date text,
-    time text
+    descrip text,
+    eventDate text,
+    eventCreated text
 );
+
+-- INSERT INTO events (author, participant, stat, title, descrip, eventDate) VALUES;
 
 create table eventChangeRequests (
     eid text, 
@@ -18,3 +20,4 @@ create table eventChangeRequests (
     status text default 'pending' -- pending, approved
     
 ); 
+
