@@ -1,8 +1,9 @@
-require('express');
+const express = require('express');
 const router = express.Router();
+const pool = require('.');
 
 // delete session key
-router.delete('/sessions/delete', (request, response) => {
+router.delete('/', (request, response) => {
     let email = request.body.email;
 	let sid = request.body.sid;
 
@@ -19,7 +20,7 @@ router.delete('/sessions/delete', (request, response) => {
 })
 
 
-router.post('/sessions/add', (request, response) => {
+router.post('/', (request, response) => {
     let sid = request.body.sid;
     let email = request.body.email;
 
@@ -36,7 +37,7 @@ router.post('/sessions/add', (request, response) => {
 	       }));
 })
 
-router.put('/session/get', (request, response) => {
+router.put('/', (request, response) => {
     console.log(`Got request for email`);
     let sid = request.body.sid;
 	console.log("Check for sid: " + sid)

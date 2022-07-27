@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const pool = require('.');
 
-router.post('/events/add', (request, response) => {
+
+router.post('/', (request, response) => {
     let { author, participant, stat, title,
 		descrip, eventDate, eventCreated} = request.body;
 

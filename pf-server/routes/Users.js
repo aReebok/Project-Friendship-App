@@ -1,7 +1,8 @@
-require('express');
+const express = require('express');
 const router = express.Router();
+const pool = require('.');
 
-router.get('/users', (request, response) => {
+router.get('/', (request, response) => {
     pool.query('SELECT * FROM users')
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows));
@@ -9,7 +10,7 @@ router.get('/users', (request, response) => {
 	})
 	.catch(err => setImmediate(() => { throw err; })); })
 
-router.post('/users/add', (request, response) => {
+router.post('/', (request, response) => {
 	let { email, fname, lname, phone, role } = request.body;
 
 	console.log(`Got request to add profile, will add ${fname} ${lname} to database table users`);
@@ -25,7 +26,7 @@ router.post('/users/add', (request, response) => {
 	       }));
 })
 
-router.put('/users/get', (request, response) => {
+router.put('/', (request, response) => {
     console.log(`Got request to check if email`);
 	let email = request.body.email;
 	console.log("Check for email: " + email)
@@ -40,7 +41,7 @@ router.put('/users/get', (request, response) => {
 	       }));
 })
 
-router.delete('/users/delete', (request, response) => {
+router.delete('/', (request, response) => {
     let email = request.body.email;
     console.log(`Got request to delete user, will remove ${email} from users table`);
     pool.query('DELETE FROM users WHERE email = $1', [email])

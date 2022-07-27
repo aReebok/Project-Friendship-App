@@ -12,6 +12,8 @@ import Directory from './lib/Admin/Directory';
 import Home from './lib/Home';
 import AlertForm from './lib/AlertForm'
 
+import MessageWall from './lib/MessageWall/MessageWall';
+
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
 const navTheme = {
@@ -22,13 +24,13 @@ const navTheme = {
   },
 };
 
-
 export default class NavExample extends Component {
     render() {
         return (
             <NavigationContainer theme={navTheme}>
               <Stack.Navigator initialRouteName="LoginScreen">
                 <Stack.Screen name="LoginScreen" component={LoginScreen}/>
+                <Stack.Screen name="MessageWall" component={MessageWall}/>
                 <Stack.Screen name="AlertForm" component={AlertForm}/>
                 <Stack.Screen name="Home" component={Home}/>
                 <Stack.Screen name="Profile" component={Profile}/>
