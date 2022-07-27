@@ -1,5 +1,5 @@
 create table child (
-    cid serial primary key,
+    cid primary key,
     fname text,
     lname text,
     dob text,

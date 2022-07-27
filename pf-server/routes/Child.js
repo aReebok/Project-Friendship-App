@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
+
 const pool = require('./index');
 
 router.post('/', (request, response) => {
-	let { email, fname, lname, phone, role } = request.body;
+	let { fname, lname, dob, school, gender } = request.body;
 
-	console.log(`Got request to register, will add ${fname} ${lname} to database table registerRequests`);
-    pool.query('INSERT INTO registerRequests (email, fname, lname, role, phone) VALUES ($1, $2, $3, $4, $5)',
-	       [email, fname, lname, role, phone])
+	console.log(`Got request to add a child, will add ${fname} ${lname} to database table child`);
+    pool.query('INSERT INTO child (fname, lname, dob, school, gender) VALUES ($1, $2, $3, $4, $5)',
+	       [fname, lname, dob, school, gender])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
 	    response.sendStatus(200)
@@ -19,9 +20,9 @@ router.post('/', (request, response) => {
 })
 
 router.delete('/', (request, response) => {
-    let email = request.body.email;
-    console.log(`Got request to delete previously created sessions, will remove ${email} from registerrequests table if exists`);
-    pool.query('DELETE FROM registerrequests WHERE email = $1', [email])
+    let cid = request.body.cid;
+    console.log(`Got request to delete previously created sessions, will remove ${cid} from child table if exists`);
+    pool.query('DELETE FROM child WHERE cid = $1', [cid])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
 	    response.sendStatus(200)
@@ -33,7 +34,7 @@ router.delete('/', (request, response) => {
 })
 
 router.get('/', (request, response) => {
-    pool.query('SELECT * FROM registerRequests')
+    pool.query('SELECT * FROM child')
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows));
 	    response.send(res.rows);
@@ -45,10 +46,10 @@ router.get('/', (request, response) => {
 })
 
 router.put('/', (request, response) => {
-    console.log(`Got request to check if email exists`);
-	let email = request.body.email;
-	console.log("Check for email: " + email)
-    pool.query('SELECT * FROM registerRequests where email = ($1)', [email])
+    console.log(`Got request to get child of given cid`);
+	let cid = request.body.cid;
+	console.log("Check for cid: " + cid)
+    pool.query('SELECT * FROM child where cid = ($1)', [cid])
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
 	    response.send(res.rows[0]);
