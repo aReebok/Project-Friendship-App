@@ -4,5 +4,5 @@ create table child (
     lname text,
     dob text,
     school text,
-    gender text,
+    pronouns text,
 );
