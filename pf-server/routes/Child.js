@@ -4,11 +4,11 @@ const router = express.Router();
 const pool = require('./index');
 
 router.post('/', (request, response) => {
-	let { cid, fname, lname, dob, school, pronouns } = request.body;
+	let { fname, lname, dob, school, pronouns } = request.body;
 
 	console.log(`Got request to add a child, will add ${fname} ${lname} to database table child`);
-    pool.query('INSERT INTO child (cid, fname, lname, dob, school, pronouns) VALUES ($1, $2, $3, $4, $5, $6)',
-	       [cid, fname, lname, dob, school, pronouns])
+    pool.query('INSERT INTO child (fname, lname, dob, school, pronouns) VALUES ($1, $2, $3, $4, $5)',
+	       [fname, lname, dob, school, pronouns])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
 	    response.sendStatus(200)
