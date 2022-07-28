@@ -11,14 +11,17 @@ const registerRoute = require("./routes/Register");
 const relationshipRoute = require("./routes/Relationship");
 const sessionsRoute = require("./routes/Sessions");
 const eventsRoute = require("./routes/Events");
+const childRoute = require("./routes/Child");
+const childRelationshipRoute = require("./routes/ChildRelationship");
 
 app.use('/users', usersRoute);
 app.use('/register', registerRoute);
 app.use('/relationship', relationshipRoute);
 app.use('/sessions', sessionsRoute);
 app.use('/events', eventsRoute);
-
-
+app.use('/child', childRoute);
+app.use('./childrelationship', childRelationshipRoute)
+ 
 // catch 404 and forward to error handler
 
 app.use(function(request, response, next) {

@@ -4,12 +4,12 @@ const router = express.Router();
 const pool = require('./index');
 
 router.post('/', (request, response) => {
-	let { cid, personEmail, isParent } = request.body;
+	let { cid, email, isParent } = request.body;
 
 	console.log(`Got request to add a realtionship with child ${cid}, 
-        will add ${personEmail} to database table childrelationship`);
-    pool.query('INSERT INTO childrelationship (cid, personEmail, isParent) VALUES ($1, $2, $3)',
-	       [cid, personEmail, isParent])
+        will add ${email} to database table childrelationship`);
+    pool.query('INSERT INTO childrelationship (cid, email, isparent) VALUES ($1, $2, $3)',
+	       [cid, email, isParent])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
 	    response.sendStatus(200)
@@ -35,10 +35,24 @@ router.delete('/cid', (request, response) => {
 	       }));
 })
 
-router.delete('/personEmail', (request, response) => {
-    let personEmail = request.body.personEmail;
-    console.log(`Got request to delete previously created sessions, will remove ${personEmail} from childrelationship table if exists`);
-    pool.query('DELETE FROM childrelationship WHERE personEmail = $1', [personEmail])
+
+router.delete('/all', (request, response) => {
+    console.log(`Got request to delete previously created sessions, will remove ${cid} from child table if exists`);
+    pool.query('DELETE FROM childrelationship')
+	.then(res => {
+	    console.log('DB response: ' + res.rows[0]);
+	    response.sendStatus(200)
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+router.delete('/email', (request, response) => {
+    let email = request.body.email;
+    console.log(`Got request to delete previously created sessions, will remove ${email} from childrelationship table if exists`);
+    pool.query('DELETE FROM childrelationship WHERE email = $1', [email])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
 	    response.sendStatus(200)
@@ -63,9 +77,9 @@ router.get('/', (request, response) => {
 
 router.put('/', (request, response) => {
     console.log(`Got request to get realtionships of given email`);
-	let personEmail = request.body.personEmail;
-	console.log("Check for personEmail: " + personEmail)
-    pool.query('SELECT * FROM childrelationship where personEmail = ($1)', [personEmail])
+	let email = request.body.email;
+	console.log("Check for email: " + email)
+    pool.query('SELECT * FROM childrelationship where email = ($1)', [email])
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
 	    response.send(res.rows[0]);
