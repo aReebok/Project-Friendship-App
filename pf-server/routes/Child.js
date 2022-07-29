@@ -117,7 +117,7 @@ router.put('/childrs/findMentorEmail', (request, response) => {
 	console.log("Retrive mentor for given cid: " + cid)
     pool.query('SELECT email from childrelationship WHERE cid = $1 and isparent = $2', [cid, val])
 	.then(res => {
-	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
 	    response.send(res.rows);
 	})
 	.catch(err =>
@@ -126,6 +126,20 @@ router.put('/childrs/findMentorEmail', (request, response) => {
 	       }));
 })
 
+router.put('/childrs/checkDuplicateRS', (request, response) => {
+    let {cid, email} = request.body;
+	
+	console.log("Retrive mentor for given cid: " + cid)
+    pool.query('SELECT * from childrelationship WHERE cid = $1 and email = $2', [cid, email])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
 
 
 module.exports = router;
