@@ -5,5 +5,5 @@ create table childrelationship (
     rid serial primary key,
     cid text,
     personEmail text,
-    isParent boolean,
+    isParent boolean
 );
