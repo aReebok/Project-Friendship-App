@@ -7,7 +7,7 @@ router.post('/', (request, response) => {
 	let { fname, lname, dob, school, pronouns, notes } = request.body;
 
 	console.log(`Got request to add a child, will add ${fname} ${lname} to database table child`);
-    pool.query('INSERT INTO child (fname, lname, dob, school, pronouns) VALUES ($1, $2, $3, $4, $5, $6)',
+    pool.query('INSERT INTO child (fname, lname, dob, school, pronouns, notes) VALUES ($1, $2, $3, $4, $5, $6)',
 	       [fname, lname, dob, school, pronouns, notes])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
