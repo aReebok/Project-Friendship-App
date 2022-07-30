@@ -113,9 +113,24 @@ router.put('/childrs', (request, response) => {
 
 router.put('/childrs/findMentorEmail', (request, response) => {
     let cid = request.body.cid;
-	let val = '0';
-	console.log("Retrive mentor for given cid: " + cid)
-    pool.query('SELECT email from childrelationship WHERE cid = $1 and isparent = $2', [cid, val])
+	let isParent = '0';
+	console.log("Retrive mentor email for given cid: " + cid)
+    pool.query('SELECT email from childrelationship WHERE cid = $1 and isparent = $2', [cid, isParent])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+router.put('/childrs/findParentEmail', (request, response) => {
+    let cid = request.body.cid;
+	let isParent = '1';
+	console.log("Retrive parent emails for given cid: " + cid)
+    pool.query('SELECT email from childrelationship WHERE cid = $1 and isparent = $2', [cid, isParent])
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
 	    response.send(res.rows);
