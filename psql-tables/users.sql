@@ -6,11 +6,15 @@ create table users (
     fname text,
     lname text,
     role text,
-    phone text
+    phone text,
+    pronouns text
 );
-
 -- example insert
-INSERT INTO users (email, fname, lname, role, phone) VALUES ('khan6@stolaf.edu', 'Areeba', 'Khan', 'mentor', '123-456-7890');
+INSERT INTO users (email, fname, lname, role, phone) VALUES ('khan6@stolaf.edu', 'Areeba', 'Khan', 'mentor', '123-456-7890', 'She/her/hers');
+
+-- Adding pronouns for parents and users 
+-- ALTER TABLE users ADD COLUMN IF NOT EXISTS pronouns text;
+
 
 -- create function addUser(email, fname, lname, role) returns
 
