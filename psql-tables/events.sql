@@ -2,7 +2,7 @@
 -- pending, approved, expired/completed/removed
 create table events (
     eid serial primary key,
-    mentor text,
+    author text,
     cid text,
     stat text default 'pending',
     title text,
