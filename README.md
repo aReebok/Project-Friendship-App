@@ -3,6 +3,12 @@
 Here is a quick and recent app update: https://drive.google.com/file/d/1YoocMhNg-2l8-x5lVzupCpd25hi-Gz6u/view?usp=sharing
 
 ## Setup 
+
+### Environment Version
+* node.js `v16.14.0`
+* npm -v `8.3.1`
+
+### Instructions using anansi.stolaf.edu hosted PSQL server
 1. Install Expo Cli/Expo App on mobile phone.
 1. Connect to VPN or St. Olaf network to be able to connect to the backend.
 1. Have a `.pgpass` file with PostgreSQL schema password.
