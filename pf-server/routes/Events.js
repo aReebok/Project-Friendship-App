@@ -36,4 +36,19 @@ router.put('/', (request, response) => {
 	       }));
 })
 
+router.put('/pending', (request, response) => {
+    console.log(`Got request to get unapproved events of given cid`);
+	let cid = request.body.cid;
+	let stat = 'approved';
+	console.log("Return unapproved events for given cid: " + cid)
+    pool.query('SELECT * FROM events where cid = ($1) AND stat != ($2)', [cid, stat])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
+	    response.send(res.rows[0]);
+	}).catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
 module.exports = router;
