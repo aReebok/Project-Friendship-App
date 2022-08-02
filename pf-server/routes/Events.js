@@ -52,6 +52,22 @@ router.put('/pending', (request, response) => {
 	       }));
 })
 
+router.put('/approved', (request, response) => {
+    let cid = request.body.cid.toString();
+	let stat = 'approved';
+	
+	console.log("Return approved events for given cid: " + cid)
+    pool.query('SELECT * from events WHERE cid = $1 and stat = $2', [cid, stat])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
 router.delete('/', (request, response) => {
     let eid = request.body.eid;
     console.log(`Got request to delete event under eid: ${eid}
