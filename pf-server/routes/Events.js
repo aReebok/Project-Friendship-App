@@ -36,6 +36,22 @@ router.put('/', (request, response) => {
 	       }));
 })
 
+router.put('/eid', (request, response) => {
+    console.log(`Got request to get events of given all event information`);
+	let { author, cid, title,
+		descrip, stat, eventDate, eventCreated, eventLocation} = request.body;
+	console.log("Check for cid: " + cid)
+    pool.query('SELECT eid FROM events where author = $1 cid = $2 eventDate = $3 eventCreated = $4 eventLocation = $5', 
+	[author, cid, eventDate, eventCreated, eventLocation])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
+	    response.send(res.rows[0]);
+	}).catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
 router.put('/pending', (request, response) => {
     let cid = request.body.cid.toString();
 	let stat = 'approved';
