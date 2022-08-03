@@ -1,6 +1,6 @@
 # Project Friendship App
 
-Here is a quick and recent app update: https://drive.google.com/file/d/1YoocMhNg-2l8-x5lVzupCpd25hi-Gz6u/view?usp=sharing
+Here is a quick and recent app update: [Google Presentation](https://docs.google.com/presentation/d/1YQho84Fd8_VQ12D2q5Jli4o7HsH273ovf5yKlhiTxSM/edit).
 
 ## Setup 
 
