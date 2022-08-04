@@ -3,11 +3,43 @@ var bodyParser = require('body-parser');
 
 const { Pool } = require('pg');
 
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      version: "1.0.0",
+      title: "Project Friendship API",
+      description: "API created for the Project Friendship Mobile App.",
+      contact: {
+        name: "Areeba Khan"
+      },
+      servers: ["http://192.168.1.214:3001"]
+    }
+  },
+  apis: ['./routes/*.js']
+};
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
 var app = express();
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Routes
+/**
+ * @swagger
+ * /customers:
+ *  get:
+ *    description: Use to request all customers
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
+ app.get("/customers", (req, res) => {
+  res.status(200).send("Customer results");
+});
 
 app.use(bodyParser.urlencoded({ extended: true }))
-
-
 
 const usersRoute = require("./routes/Users");
 const registerRoute = require("./routes/Register");
@@ -25,28 +57,6 @@ app.use('/events', eventsRoute);
 app.use('/child', childRoute);
 app.use('./childrelationship', childRelationshipRoute)
  
-const swaggerJsDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
-
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      version: "1.0.0",
-      title: "Customer API",
-      description: "Customer API Information",
-      contact: {
-        name: "Amazing Developer"
-      },
-      servers: ["http://192.168.1.214:3001"]
-    }
-  },
-  // ['.routes/*.js']
-  apis: ["app.js"]
-};
-
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
 
 app.use(function(request, response, next) {
   // catch 404 and forward to error handler

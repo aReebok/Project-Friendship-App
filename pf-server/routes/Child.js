@@ -1,8 +1,38 @@
 const express = require('express');
 const router = express.Router();
-
 const pool = require('./index');
 
+
+/**
+ * @swagger  
+ * /child:
+ *  post:
+ *    description: Use to post a child profile
+ *    parameters:
+ *    - name: fname
+ *      description: first name of child
+ *      in: formData
+ *      required: true
+ *      type: String
+ *    - name: lname
+ *      description: last name of child
+ *      in: formData
+ *      required: true
+ *      type: String
+ *    - name: dob
+ *      description: date of birth of child
+ *      in: formData
+ *      required: true
+ *      type: String
+  *    - name: school
+ *      description: school of child
+ *      in: formData
+ *      required: true
+ *      type: String
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
 router.post('/', (request, response) => {
 	let { fname, lname, dob, school, pronouns, notes } = request.body;
 
@@ -19,22 +49,16 @@ router.post('/', (request, response) => {
 	       }));
 })
 
-
-router.delete('/', (request, response) => {
-    let cid = request.body.cid;
-    console.log(`Got request to delete previously created sessions, will remove ${cid} from child table if exists`);
-    pool.query('DELETE FROM child WHERE cid = $1', [cid])
-	.then(res => {
-	    console.log('DB response: ' + res.rows[0]);
-	    response.sendStatus(200)
-	})
-	.catch(err =>
-	       setImmediate(() => {
-		   throw err;
-	       }));
-})
-
-router.get('/', (request, response) => {
+/**
+ * @swagger  
+ * /child:
+ *  get:
+ *    description: returns all child profiles
+ *    responses:
+ *      '200':
+ *        description: all child profiles returned
+ */
+ router.get('/', (request, response) => {
     pool.query('SELECT * FROM child')
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows));
@@ -46,6 +70,21 @@ router.get('/', (request, response) => {
 	       }));
 })
 
+/**
+ * @swagger  
+ * /child:
+ *  put:
+ *    description: get child profile by cid
+ *    parameters:
+ *    - name: cid
+ *      description: child ID to delete
+ *      in: formData
+ *      required: true
+ *      type: int
+ *    responses:
+ *      '200':
+ *        description: Child successfully deleted
+ */
 router.put('/', (request, response) => {
     console.log(`Got request to get child of given cid`);
 	let cid = request.body.cid;
@@ -60,6 +99,21 @@ router.put('/', (request, response) => {
 	       }));
 })
 
+/**
+ * @swagger  
+ * /child/dobSearch:
+ *  put:
+ *    description: get child profile by cid
+ *    parameters:
+ *    - name: dob
+ *      description: child ID to delete
+ *      in: formData
+ *      required: true
+ *      type: int
+ *    responses:
+ *      '200':
+ *        description: Child successfully deleted
+ */
 router.put('/dobSearch', (request, response) => {
     console.log(`Got request to get child of given cid`);
 	let { lname, dob } = request.body;
@@ -79,7 +133,31 @@ router.put('/dobSearch', (request, response) => {
 	CHILDRELATIONSHIP TABLE
 */
 
-
+/**
+ * @swagger  
+ * /child/childrs:
+ *  post:
+ *    description: Posts a relationshp between a given child profile and user profile
+ *    parameters:
+ *    - name: cid
+ *      description: child ID of profile to create a relationship for 
+ *      in: formData
+ *      required: true
+ *      type: int
+ *    - name: email
+ *      description: email of the user to add to realtionship with child
+ *      in: formData
+ *      required: true
+ *      type: String
+ *    - name: isParent
+ *      description: boolean to describe if the user profile is parent of child profile
+ *      in: formData
+ *      required: true
+ *      type: Boolean
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
 router.post('/childrs', (request, response) => {
 	let { cid, email, isParent } = request.body;
 
@@ -156,6 +234,34 @@ router.put('/childrs/checkDuplicateRS', (request, response) => {
 	       }));
 })
 
+/**
+ * @swagger  
+ * /child:
+ *  delete:
+ *    description: delete child profile when given cid
+ *    parameters:
+ *    - name: cid
+ *      description: child ID to delete
+ *      in: formData
+ *      required: true
+ *      type: int
+ *    responses:
+ *      '200':
+ *        description: Child successfully deleted
+ */
+ router.delete('/', (request, response) => {
+    let cid = request.body.cid;
+    console.log(`Got request to delete previously created sessions, will remove ${cid} from child table if exists`);
+    pool.query('DELETE FROM child WHERE cid = $1', [cid])
+	.then(res => {
+	    console.log('DB response: ' + res.rows[0]);
+	    response.sendStatus(200)
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
 
 module.exports = router;
 
