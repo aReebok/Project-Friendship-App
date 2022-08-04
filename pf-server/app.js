@@ -24,21 +24,6 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 var app = express();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-// Routes
-/**
- * @swagger
- * /customers:
- *  get:
- *    description: Use to request all customers
- *    responses:
- *      '200':
- *        description: A successful response
- */
- app.get("/customers", (req, res) => {
-  res.status(200).send("Customer results");
-});
-
 app.use(bodyParser.urlencoded({ extended: true }))
 
 const usersRoute = require("./routes/Users");
