@@ -3,7 +3,7 @@
 
 create table childrelationship (
     rid serial primary key,
-    cid text,
-    personEmail text,
+    cid int,
+    email text,
     isParent boolean
 );

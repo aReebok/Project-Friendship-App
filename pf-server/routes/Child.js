@@ -175,6 +175,27 @@ router.post('/childrs', (request, response) => {
 	       }));
 })
 
+/**
+ * @swagger  
+ * /child/childrs:
+ *  get:
+ *    description: returns all relationships
+ *    responses:
+ *      '200':
+ *        description: all child relationships returned
+ */
+ router.get('/childrs', (request, response) => {
+    pool.query('SELECT * FROM childrelationship')
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
 router.put('/childrs', (request, response) => {
     let email = request.body.email;
 	console.log("Retrive all realtionships for email: " + email)

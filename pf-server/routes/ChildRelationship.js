@@ -1,9 +1,38 @@
 const express = require('express');
 const router = express.Router();
-
 const pool = require('./index');
 
-router.post('/', (request, response) => {
+
+/*
+	CHILDRELATIONSHIP TABLE
+*/
+
+/**
+ * @swagger  
+ * /child/childrs:
+ *  post:
+ *    description: Posts a relationshp between a given child profile and user profile
+ *    parameters:
+ *    - name: cid
+ *      description: child ID of profile to create a relationship for 
+ *      in: formData
+ *      required: true
+ *      type: int
+ *    - name: email
+ *      description: email of the user to add to realtionship with child
+ *      in: formData
+ *      required: true
+ *      type: String
+ *    - name: isParent
+ *      description: boolean to describe if the user profile is parent of child profile
+ *      in: formData
+ *      required: true
+ *      type: Boolean
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
+router.post('/childrs', (request, response) => {
 	let { cid, email, isParent } = request.body;
 
 	console.log(`Got request to add a realtionship with child ${cid}, 
@@ -20,50 +49,16 @@ router.post('/', (request, response) => {
 	       }));
 })
 
-router.delete('/cid', (request, response) => {
-    let cid = request.body.cid;
-    console.log(`Got request to delete all childrelationship under cid: ${cid}
-     from childrelationship table if exists`);
-    pool.query('DELETE FROM childrelationship WHERE cid = $1', [cid])
-	.then(res => {
-	    console.log('DB response: ' + res.rows[0]);
-	    response.sendStatus(200)
-	})
-	.catch(err =>
-	       setImmediate(() => {
-		   throw err;
-	       }));
-})
-
-
-router.delete('/all', (request, response) => {
-    console.log(`Got request to delete previously created sessions, will remove ${cid} from child table if exists`);
-    pool.query('DELETE FROM childrelationship')
-	.then(res => {
-	    console.log('DB response: ' + res.rows[0]);
-	    response.sendStatus(200)
-	})
-	.catch(err =>
-	       setImmediate(() => {
-		   throw err;
-	       }));
-})
-
-router.delete('/email', (request, response) => {
-    let email = request.body.email;
-    console.log(`Got request to delete previously created sessions, will remove ${email} from childrelationship table if exists`);
-    pool.query('DELETE FROM childrelationship WHERE email = $1', [email])
-	.then(res => {
-	    console.log('DB response: ' + res.rows[0]);
-	    response.sendStatus(200)
-	})
-	.catch(err =>
-	       setImmediate(() => {
-		   throw err;
-	       }));
-})
-
-router.get('/', (request, response) => {
+/**
+ * @swagger  
+ * /childrs:
+ *  get:
+ *    description: returns all relationships
+ *    responses:
+ *      '200':
+ *        description: all child relationships returned
+ */
+ router.get('/', (request, response) => {
     pool.query('SELECT * FROM childrelationship')
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows));
@@ -76,18 +71,64 @@ router.get('/', (request, response) => {
 })
 
 router.put('/', (request, response) => {
-    console.log(`Got request to get realtionships of given email`);
-	let email = request.body.email;
-	console.log("Check for email: " + email)
-    pool.query('SELECT * FROM childrelationship where email = ($1)', [email])
+    let email = request.body.email;
+	console.log("Retrive all realtionships for email: " + email)
+    pool.query('SELECT * from childrelationship WHERE email = $1', [email])
 	.then(res => {
-	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
-	    response.send(res.rows[0]);
-	}).catch(err =>
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
+	})
+	.catch(err =>
 	       setImmediate(() => {
 		   throw err;
 	       }));
 })
+
+router.put('/findMentorEmail', (request, response) => {
+    let cid = request.body.cid;
+	let isParent = '0';
+	console.log("Retrive mentor email for given cid: " + cid)
+    pool.query('SELECT email from childrelationship WHERE cid = $1 and isparent = $2', [cid, isParent])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+router.put('/childrs/findParentEmail', (request, response) => {
+    let cid = request.body.cid;
+	let isParent = '1';
+	console.log("Retrive parent emails for given cid: " + cid)
+    pool.query('SELECT email from childrelationship WHERE cid = $1 and isparent = $2', [cid, isParent])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+router.put('/childrs/checkDuplicateRS', (request, response) => {
+    let {cid, email} = request.body;
+	
+	console.log("Retrive mentor for given cid: " + cid)
+    pool.query('SELECT * from childrelationship WHERE cid = $1 and email = $2', [cid, email])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
 
 module.exports = router;
 

@@ -55,7 +55,7 @@ app.use('/relationship', relationshipRoute);
 app.use('/sessions', sessionsRoute);
 app.use('/events', eventsRoute);
 app.use('/child', childRoute);
-app.use('./childrelationship', childRelationshipRoute)
+app.use('./childrs', childRelationshipRoute)
  
 
 app.use(function(request, response, next) {
