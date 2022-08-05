@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const pool = require('./index');
 
-
 /**
  * @swagger  
  * /child:
@@ -24,11 +23,22 @@ const pool = require('./index');
  *      in: formData
  *      required: true
  *      type: String
-  *    - name: school
+ *    - name: school
  *      description: school of child
  *      in: formData
  *      required: true
  *      type: String
+ *    - name: pronouns
+ *      description: pronouns of child
+ *      in: formData
+ *      required: true
+ *      type: String
+ *    - name: notes
+ *      description: notes regarding child 
+ *      in: formData
+ *      required: true
+ *      type: String
+ * 
  *    responses:
  *      '200':
  *        description: A successful response
@@ -77,13 +87,13 @@ router.post('/', (request, response) => {
  *    description: get child profile by cid
  *    parameters:
  *    - name: cid
- *      description: child ID to delete
+ *      description: child ID for child profile
  *      in: formData
  *      required: true
- *      type: int
+ *      type: integer
  *    responses:
  *      '200':
- *        description: Child successfully deleted
+ *        description: Child profile JSON object returned by cid
  */
 router.put('/', (request, response) => {
     console.log(`Got request to get child of given cid`);
@@ -103,16 +113,21 @@ router.put('/', (request, response) => {
  * @swagger  
  * /child/dobSearch:
  *  put:
- *    description: get child profile by cid
+ *    description: get child profile by date of birth and last name
  *    parameters:
  *    - name: dob
- *      description: child ID to delete
+ *      description: date of birth of child
  *      in: formData
  *      required: true
- *      type: int
+ *      type: String
+ *    - name: lname
+ *      description: last name of child
+ *      in: formData
+ *      required: true
+ *      type: String
  *    responses:
  *      '200':
- *        description: Child successfully deleted
+ *        description: a child object
  */
 router.put('/dobSearch', (request, response) => {
     console.log(`Got request to get child of given cid`);
@@ -130,7 +145,7 @@ router.put('/dobSearch', (request, response) => {
 
 
 /*
-	CHILDRELATIONSHIP TABLE
+	CHILDRELATIONSHIP TABLE Endpoints
 */
 
 /**
@@ -178,24 +193,28 @@ router.post('/childrs', (request, response) => {
 /**
  * @swagger  
  * /child/childrs:
- *  get:
- *    description: returns all relationships
+ *  put:
+ *    description: Posts a relationshp between a given child profile and user profile
+ *    parameters:
+ *    - name: cid
+ *      description: child ID of profile to create a relationship for 
+ *      in: formData
+ *      required: true
+ *      type: int
+ *    - name: email
+ *      description: email of the user to add to realtionship with child
+ *      in: formData
+ *      required: true
+ *      type: String
+ *    - name: isParent
+ *      description: boolean to describe if the user profile is parent of child profile
+ *      in: formData
+ *      required: true
+ *      type: Boolean
  *    responses:
  *      '200':
- *        description: all child relationships returned
+ *        description: A successful response
  */
- router.get('/childrs', (request, response) => {
-    pool.query('SELECT * FROM childrelationship')
-	.then(res => {
-	    console.log('DB response: ' + JSON.stringify(res.rows));
-	    response.send(res.rows);
-	})
-	.catch(err =>
-	       setImmediate(() => {
-		   throw err;
-	       }));
-})
-
 router.put('/childrs', (request, response) => {
     let email = request.body.email;
 	console.log("Retrive all realtionships for email: " + email)
