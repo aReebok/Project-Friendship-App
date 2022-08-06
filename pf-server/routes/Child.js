@@ -61,6 +61,28 @@ router.post('/', (request, response) => {
 
 /**
  * @swagger  
+ * /child/childrs:
+ *  get:
+ *    description: returns all relationships
+ *    responses:
+ *      '200':
+ *        description: all child relationships returned
+ */
+ router.get('/childrs', (request, response) => {
+    pool.query('SELECT * FROM childrelationship')
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+
+/**
+ * @swagger  
  * /child:
  *  get:
  *    description: returns all child profiles
