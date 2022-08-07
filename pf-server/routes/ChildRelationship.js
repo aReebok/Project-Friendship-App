@@ -4,8 +4,29 @@ const pool = require('./index');
 
 
 /*
-	CHILDRELATIONSHIP TABLE
+	CHILDRELATIONSHIP Route
 */
+
+/**
+ * @swagger  
+ * /childrs:
+ *  get:
+ *    description: returns all relationships
+ *    responses:
+ *      '200':
+ *        description: all child relationships returned
+ */
+ router.get('/', (request, response) => {
+    pool.query('SELECT * FROM childrelationship')
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
 
 /**
  * @swagger  
@@ -32,7 +53,7 @@ const pool = require('./index');
  *      '200':
  *        description: A successful response
  */
-router.post('/childrs', (request, response) => {
+router.post('/', (request, response) => {
 	let { cid, email, isParent } = request.body;
 
 	console.log(`Got request to add a realtionship with child ${cid}, 
@@ -42,27 +63,6 @@ router.post('/childrs', (request, response) => {
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
 	    response.sendStatus(200)
-	})
-	.catch(err =>
-	       setImmediate(() => {
-		   throw err;
-	       }));
-})
-
-/**
- * @swagger  
- * /childrs:
- *  get:
- *    description: returns all relationships
- *    responses:
- *      '200':
- *        description: all child relationships returned
- */
- router.get('/', (request, response) => {
-    pool.query('SELECT * FROM childrelationship')
-	.then(res => {
-	    console.log('DB response: ' + JSON.stringify(res.rows));
-	    response.send(res.rows);
 	})
 	.catch(err =>
 	       setImmediate(() => {
@@ -99,7 +99,7 @@ router.put('/findMentorEmail', (request, response) => {
 	       }));
 })
 
-router.put('/childrs/findParentEmail', (request, response) => {
+router.put('/findParentEmail', (request, response) => {
     let cid = request.body.cid;
 	let isParent = '1';
 	console.log("Retrive parent emails for given cid: " + cid)
@@ -114,7 +114,7 @@ router.put('/childrs/findParentEmail', (request, response) => {
 	       }));
 })
 
-router.put('/childrs/checkDuplicateRS', (request, response) => {
+router.put('/checkDuplicateRS', (request, response) => {
     let {cid, email} = request.body;
 	
 	console.log("Retrive mentor for given cid: " + cid)
@@ -131,4 +131,3 @@ router.put('/childrs/checkDuplicateRS', (request, response) => {
 
 
 module.exports = router;
-
