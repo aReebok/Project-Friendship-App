@@ -68,6 +68,22 @@ router.put('/pending', (request, response) => {
 	       }));
 })
 
+
+router.put('/cid', (request, response) => {
+    let cid = request.body.cid.toString();
+	
+	console.log("Return ALL events for given cid: " + cid)
+    pool.query('SELECT * from events WHERE cid = $1', [cid])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
 router.put('/approved', (request, response) => {
     let cid = request.body.cid.toString();
 	let stat = 'approved';
