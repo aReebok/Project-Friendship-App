@@ -16,17 +16,14 @@ const pool = require('./index');
  *      '200':
  *        description: all child relationships returned
  */
- router.get('/', (request, response) => {
+
+router.get('/', (request, response) => {
     pool.query('SELECT * FROM childrelationship')
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows));
 	    response.send(res.rows);
 	})
-	.catch(err =>
-	       setImmediate(() => {
-		   throw err;
-	       }));
-})
+	.catch(err => setImmediate(() => { throw err; })); })
 
 /**
  * @swagger  

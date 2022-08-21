@@ -30,7 +30,7 @@ export default class NavExample extends Component {
                 <Stack.Screen name="LoginScreen" component={LoginScreen}/>
                 <Stack.Screen name="MessageWall" component={MessageWall}/>
                 <Stack.Screen name="AlertForm" component={AlertForm}/>
-                <Stack.Screen name="Home" component={Home}/>
+                <Stack.Screen name="Home" component={Home} options={{headerLeft: (props) => null }}  />
                 <Stack.Screen name="Profile" component={Profile}/>
                 <Stack.Screen name="Event" component={Event}/>
                 <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
