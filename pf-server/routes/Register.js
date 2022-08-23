@@ -3,11 +3,11 @@ const router = express.Router();
 const pool = require('./index');
 
 router.post('/', (request, response) => {
-	let { email, fname, lname, phone, role } = request.body;
+	let { email, fname, lname, phone, role, pronouns } = request.body;
 
 	console.log(`Got request to register, will add ${fname} ${lname} to database table registerRequests`);
-    pool.query('INSERT INTO registerRequests (email, fname, lname, role, phone) VALUES ($1, $2, $3, $4, $5)',
-	       [email, fname, lname, role, phone])
+    pool.query('INSERT INTO registerRequests (email, fname, lname, role, phone, pronouns) VALUES ($1, $2, $3, $4, $5, $6)',
+	       [email, fname, lname, role, phone, pronouns])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
 	    response.sendStatus(200)
