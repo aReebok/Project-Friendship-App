@@ -11,11 +11,11 @@ router.get('/', (request, response) => {
 	.catch(err => setImmediate(() => { throw err; })); })
 
 router.post('/', (request, response) => {
-	let { email, fname, lname, phone, role } = request.body;
+	let { email, fname, lname, phone, role, pronouns } = request.body;
 
-	console.log(`Got request to add profile, will add ${fname} ${lname} to database table users`);
-    pool.query('INSERT INTO users (email, fname, lname, role, phone) VALUES ($1, $2, $3, $4, $5)',
-	       [email, fname, lname, role, phone])
+	console.log(`Got request to add profile, will add ${fname} ${lname} (${pronouns}) to database table users`);
+    pool.query('INSERT INTO users (email, fname, lname, role, phone, pronouns) VALUES ($1, $2, $3, $4, $5, $6)',
+	       [email, fname, lname, role, phone, pronouns])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
 	    response.sendStatus(200)
