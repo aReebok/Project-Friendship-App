@@ -31,6 +31,7 @@ const registerRoute = require("./routes/Register");
 const relationshipRoute = require("./routes/Relationship");
 const sessionsRoute = require("./routes/Sessions");
 const eventsRoute = require("./routes/Events");
+const eventLogs = require("./routes/EventLogs");
 const childRoute = require("./routes/Child");
 const childRelationshipRoute = require("./routes/ChildRelationship");
 
@@ -39,6 +40,7 @@ app.use('/register', registerRoute);
 app.use('/relationship', relationshipRoute);
 app.use('/sessions', sessionsRoute);
 app.use('/events', eventsRoute);
+app.use('/log', eventLogs);
 app.use('/child', childRoute);
 app.use('/childrs', childRelationshipRoute);
  

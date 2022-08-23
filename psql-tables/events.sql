@@ -13,6 +13,19 @@ create table events (
     approvedBy text
 );
 
+-- stat:
+---- pending: event created and is pending approval
+---- edited: event time was edited by a user and request was resent for event
+---- completed: event was completed and logged
+---- expired: event request was not approved before the time expired...
+
+create table log (
+    lid serial primary key,
+    eid int,
+    mentorEmail text,
+    duration text
+);
+
 
 -- INSERT INTO events (author, participant, stat, title, descrip, eventDate) VALUES;
 
