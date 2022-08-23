@@ -9,8 +9,10 @@ create table events (
     descrip text,
     eventDate text,
     eventCreated text,
-    eventLocation text
+    eventLocation text,
+    approvedBy text
 );
+
 
 -- INSERT INTO events (author, participant, stat, title, descrip, eventDate) VALUES;
 
