@@ -26,8 +26,8 @@ router.put('/', (request, response) => {
 	console.log("Check log table for: " + email)
     pool.query('SELECT * FROM log where mentoremail = ($1)', [email])
 	.then(res => {
-	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
-	    response.send(res.rows[0]);
+	    console.log('DB response: ' + JSON.stringify(res.rows));
+	    response.send(res.rows);
 	}).catch(err =>
 	       setImmediate(() => {
 		   throw err;
