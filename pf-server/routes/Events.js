@@ -72,9 +72,10 @@ router.put('/geteid', (request, response) => {
 router.put('/pending', (request, response) => {
     let cid = request.body.cid.toString();
 	let stat = 'approved';
+	let stat2 = 'completed';
 	
 	console.log("Return unapproved events for given cid: " + cid)
-    pool.query('SELECT * from events WHERE cid = $1 and stat != $2', [cid, stat])
+    pool.query('SELECT * from events WHERE cid = $1 and stat != $2 and stat != $3', [cid, stat, stat2])
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows));
 	    response.send(res.rows);
