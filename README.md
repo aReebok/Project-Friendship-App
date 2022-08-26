@@ -1,6 +1,46 @@
 # Project Friendship App
 
-Here is a quick and recent app update: [Google Presentation](https://docs.google.com/presentation/d/1YQho84Fd8_VQ12D2q5Jli4o7HsH273ovf5yKlhiTxSM/edit).
+The **Project Friendship Mobile Application** serves the purpose of connecting St. Olaf and Carleton College students to their mentee's parents to schedule hangouts and events. Also allows for a mean to emergency contact the PF organization or other alert other St. Olaf/Carleton students of any emergencies. 
+
+Here is the initial prototype created in July: [Google Presentation](https://docs.google.com/presentation/d/1YQho84Fd8_VQ12D2q5Jli4o7HsH273ovf5yKlhiTxSM/edit).
+
+## Technologies Used
+
+**NodeJS** - Creating Express.js RESTful API server in MVC environemnt. 
+
+**React Native** - Frontend.
+
+**PostgreSQL** - backend database.
+
+**AWS** - deployment of Express.js server.
+
+**Expo** - SDK environment. 
+
+## Features
+
+Incoming features for baseline deployment are marked with a `*` character.
+
+* **Registration**: the registration screen ensures that every field is complete before sending a registration request to the database. An admin can then approve, edit, deny this request as they please.
+
+* **Google OAuth User Login**: after registration is completed and approved, users can login using their gmail account using safe, passwordless Google Authentication. An admin can still edit user email, phone number and every account detail, even being able to delete the account with cascading delete API calls to the backend to ensure user privacy*. 
+
+* **Phone Number Login\***: for parents who do not have a gmail account, to allow for more accessibility, I would like to allow for phone-number login. To avoid storing phone number in our PF database, password hashing will be used. 
+
+* **Profile page**
+    * Mentor's View:
+
+        **My Profile**: Mentor is able to view their profile and private information. Mentors must contact admin to edit their person information for security purposes.
+
+        **My Relationships**: Mentors can click on this tab to see their relationships. Mentor's have QR codes that parents can scan and assign given mentor to a child*. Mentors can scan a child's QR code to add that child to their relationship, so they can start sending event requests.
+
+        **Logs**: *mentors only* - mentors of the Project Friendship community will have access to their previously completed events, the number of hours spent at each, and total hours contributed. 
+
+
+
+## Extra Features
+* **"Delete My Account" Button**: An extra feature would be to have a "Delete My Account" requesting button that an admin can approve for retiring St. Olaf/Carleton students from the PF program*.
+
+
 
 ## Setup 
 
