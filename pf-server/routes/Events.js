@@ -53,12 +53,29 @@ router.put('/eid', (request, response) => {
 	       }));
 })
 
+router.put('/geteid', (request, response) => {
+    console.log(`Got request to get events of given all event information`);
+	let { cid, descrip, eventLocation} = request.body;
+	console.log("Get EID when given cid")
+    pool.query('SELECT eid FROM events where cid = $1 AND descrip = $2 AND eventlocation = $3', 
+	[cid, descrip, eventLocation])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
+	    response.send(res.rows[0]);
+	}).catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+
 router.put('/pending', (request, response) => {
     let cid = request.body.cid.toString();
 	let stat = 'approved';
+	let stat2 = 'completed';
 	
 	console.log("Return unapproved events for given cid: " + cid)
-    pool.query('SELECT * from events WHERE cid = $1 and stat != $2', [cid, stat])
+    pool.query('SELECT * from events WHERE cid = $1 and stat != $2 and stat != $3', [cid, stat, stat2])
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows));
 	    response.send(res.rows);
