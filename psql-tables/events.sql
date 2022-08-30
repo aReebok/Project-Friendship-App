@@ -3,7 +3,7 @@
 create table events (
     eid serial primary key,
     author text,
-    cid text,
+    cid int,
     stat text default 'pending',
     title text,
     descrip text,
@@ -23,7 +23,7 @@ create table log (
     lid serial primary key,
     eid int,
     mentorEmail text,
-    duration text
+    duration numeric
 );
 
 
