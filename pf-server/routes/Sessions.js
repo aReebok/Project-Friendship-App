@@ -21,12 +21,11 @@ router.delete('/', (request, response) => {
 
 
 router.post('/', (request, response) => {
-    let sid = request.body.sid;
-    let email = request.body.email;
+    const { sid, email, notiftoken } = request.body;
 
 	console.log(`Got request to add a session, will add ${sid},${email} to database`);
-    pool.query('INSERT INTO sessions (sid, email) VALUES ($1, $2)',
-	       [sid, email])
+    pool.query('INSERT INTO sessions (sid, email, notiftoken) VALUES ($1, $2, $3)',
+	       [sid, email, notiftoken])
 	.then(res => {
 	    console.log('DB response: ' + res.rows[0]);
 	    response.sendStatus(200)
