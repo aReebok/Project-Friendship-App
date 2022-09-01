@@ -130,7 +130,7 @@ router.put('/cid', (request, response) => {
     let { cid } = request.body;
 	
 	console.log("Return all events for given cid: " + cid)
-    pool.query('SELECT * from event_summary WHERE cid = $1', [10000071])
+    pool.query('SELECT * from events_summary WHERE cid = $1', [cid])
 	.then(res => {
 	    console.log('DB response: ' + JSON.stringify(res.rows));
 	    response.send(res.rows);
