@@ -51,4 +51,36 @@ router.put('/', (request, response) => {
 	       }));
 })
 
+router.put('/getToken', (request, response) => {
+    console.log(`Got request for token given an email`);
+    let { email } = request.body;
+	console.log("Get token by email: " + email)
+    pool.query('SELECT notiftoken from sessions where email = $1', [email])
+	.then(res => {
+	    console.log('DB response: ' + JSON.stringify(res.rows[0]));
+	    response.send(res.rows[0]);
+	})
+	.catch(err =>
+	       setImmediate(() => {
+		   throw err;
+	       }));
+})
+
+// router.put('/cid', (request, response) => {
+//     let { cid } = request.body;
+	
+// 	console.log("Return all events for given cid: " + cid)
+//     pool.query('SELECT * from events_summary WHERE cid = $1', [cid])
+// 	.then(res => {
+// 	    console.log('DB response: ' + JSON.stringify(res.rows));
+// 	    response.send(res.rows);
+// 	})
+// 	.catch(err =>
+// 	       setImmediate(() => {
+// 		   throw err;
+// 	       }));
+// })
+
+
+
 module.exports = router;

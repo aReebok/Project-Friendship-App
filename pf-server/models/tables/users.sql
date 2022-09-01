@@ -21,8 +21,6 @@ INSERT INTO users (email, fname, lname, role, phone, pronouns) VALUES ('kahnaree
 -- ALTER TABLE users ADD COLUMN IF NOT EXISTS pronouns text;
 
 
--- create function addUser(email, fname, lname, role) returns
-
 -- table of users that have requested to sign up
 create table registerRequests (
     email text primary key,
@@ -39,14 +37,15 @@ create table registerRequests (
 --     role text
 -- );
 
--- create table sessions (
---     sid text primary key, -- secure session key
---     email text            -- authenticated email 
--- );
+create table sessions (
+    sid text primary key, -- secure session key
+    email text,            -- authenticated email 
+    notiftoken text
+);
 
--- create function email(text) returns text as $$
---     select email from sessions where sid = $1;
--- $$ language 'sql';
+create function email(text) returns text as $$
+    select email from sessions where sid = $1;
+$$ language 'sql';
 
 -- -- postgres function update_profile()
 -- --    3 args type text: email, fname, lname, role, phone
