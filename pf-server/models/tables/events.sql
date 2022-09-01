@@ -11,7 +11,7 @@ create table events (
     eventDate text,
     eventCreated text,
     eventLocation text,
-    approvedBy text default ''
+    approvedBy text default 'null'
 );
 
 -- stat:
