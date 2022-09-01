@@ -1,5 +1,6 @@
 -- set up relationship table
 -- pending, approved, expired/completed/removed
+
 create table events (
     eid serial primary key,
     author text,
@@ -10,7 +11,7 @@ create table events (
     eventDate text,
     eventCreated text,
     eventLocation text,
-    approvedBy text
+    approvedBy text default 'null'
 );
 
 -- stat:
