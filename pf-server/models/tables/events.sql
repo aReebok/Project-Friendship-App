@@ -1,6 +1,8 @@
 -- set up relationship table
 -- pending, approved, expired/completed/removed
 
+drop table events;
+
 create table events (
     eid serial primary key,
     author text,
@@ -19,6 +21,8 @@ create table events (
 ---- edited: event time was edited by a user and request was resent for event
 ---- completed: event was completed and logged
 ---- expired: event request was not approved before the time expired...
+
+drop table log;
 
 create table log (
     lid serial primary key,
