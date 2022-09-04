@@ -1,5 +1,7 @@
 -- creates a view so I don't have to query for everything from other tables
 
+drop view childrs_summary;
+
 create view events_summary as
     select e.*, c.fname as childfname, c.lname as childlname, 
     u.fname as authorfname, u.lname as authorlname, u.role as authorrole, u.phone as authorphone, 

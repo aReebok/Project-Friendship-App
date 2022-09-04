@@ -22,6 +22,9 @@ INSERT INTO users (email, fname, lname, role, phone, pronouns) VALUES ('kahnaree
 
 
 -- table of users that have requested to sign up
+
+drop table registerRequests;
+
 create table registerRequests (
     email text primary key,
     fname text,
@@ -36,6 +39,8 @@ create table registerRequests (
 --     email text primary key,
 --     role text
 -- );
+
+drop table sessions;
 
 create table sessions (
     sid text primary key, -- secure session key
