@@ -3,14 +3,15 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import LoginScreen from './lib/LoginScreen';
-import Profile from './lib/Profile';
+import Profile from './lib/Users/Profile/Profile';
 import RegisterScreen from './lib/RegisterScreen';
-import Event from './lib/Event/Event';
-import RegistrationRequests from './lib/Admin/RegistrationRequests';
-import Directory from './lib/Admin/Directory';
-import Home from './lib/Home';
-import AlertForm from './lib/AlertForm'
-import MessageWall from './lib/MessageWall/MessageWall';
+import Event from './lib/Users/Event/Event';
+import RegistrationRequests from './lib/Admin/Registration/RegistrationRequest';
+import AdminHome from './lib/Admin/AdminHome';
+import Directory from './lib/Admin/Directory/Directory';
+import Home from './lib/Users/Home';
+import AlertForm from './lib/Users/MentorOnly/Alert/AlertForm'
+import MessageWall from './lib/Users/MentorOnly/MessageWall/MessageWall';
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -34,7 +35,8 @@ export default class NavExample extends Component {
                 <Stack.Screen name="Profile" component={Profile}/>
                 <Stack.Screen name="Event" component={Event}/>
                 <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
-                <Stack.Screen name="RegistrationRequests" component={RegistrationRequests} options={{headerLeft: (props) => null }}/>
+                <Stack.Screen name="AdminHome" component={AdminHome} options={{headerLeft: (props) => null }}/>
+                <Stack.Screen name="RegistrationRequests" component={RegistrationRequests}/>
                 <Stack.Screen name="Directory" component={Directory}/>
               </Stack.Navigator>
             </NavigationContainer>
