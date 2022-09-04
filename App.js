@@ -34,7 +34,7 @@ export default class NavExample extends Component {
                 <Stack.Screen name="Profile" component={Profile}/>
                 <Stack.Screen name="Event" component={Event}/>
                 <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
-                <Stack.Screen name="RegistrationRequests" component={RegistrationRequests}/>
+                <Stack.Screen name="RegistrationRequests" component={RegistrationRequests} options={{headerLeft: (props) => null }}/>
                 <Stack.Screen name="Directory" component={Directory}/>
               </Stack.Navigator>
             </NavigationContainer>
