@@ -1,5 +1,5 @@
 const CONFIG = {
-    url: "http://192.168.1.214:3001",
+    url: "http://projectfriendshipmobileapp-env.eba-yw8gp7ug.us-west-2.elasticbeanstalk.com",
     formContentType: "application/x-www-form-urlencoded;charset=UTF-8",
     logo: {
         red: '#E6000C',
