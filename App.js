@@ -9,7 +9,7 @@ import Event from './lib/Users/Event/Event';
 import RegistrationRequests from './lib/Admin/Registration/RegistrationRequest';
 import AdminHome from './lib/Admin/AdminHome';
 import Directory from './lib/Admin/Directory/Directory';
-import Home from './lib/Users/Home';
+import Home from './lib/Users/Home/Home';
 import AlertForm from './lib/Users/MentorOnly/Alert/AlertForm'
 import MessageWall from './lib/Users/MentorOnly/MessageWall/MessageWall';
 
@@ -35,7 +35,7 @@ export default class NavExample extends Component {
                 <Stack.Screen name="Profile" component={Profile}/>
                 <Stack.Screen name="Event" component={Event}/>
                 <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
-                <Stack.Screen name="AdminHome" component={AdminHome} options={{headerLeft: (props) => null }}/>
+                <Stack.Screen name="AdminHome" component={AdminHome} options={{headerLeft: (props) => null , title:"Home"}}/>
                 <Stack.Screen name="RegistrationRequests" component={RegistrationRequests}/>
                 <Stack.Screen name="Directory" component={Directory}/>
               </Stack.Navigator>
